@@ -17,6 +17,23 @@ router.get('/users',(req,res) => {
     })
 })
 
+
+app.post('/usersi',async(req,res) => {
+    let body = req.body;
+
+
+    let collection = 'user';
+    let response = await postData(collection,body);
+
+    
+    res.send(response)
+
+    
+})
+
+
+
+
 //register user
 router.post('/register',(req,res) => {
     let hashpassword = bcrypt.hashSync(req.body.password,8);
@@ -25,7 +42,7 @@ router.post('/register',(req,res) => {
         email:req.body.email,
         password:hashpassword,
         phone:req.body.phone,
-        role:req.body.role?req.body.role:'User'
+        // role:req.body.role?req.body.role:'User'
     },(err,result) => {
         res.status(200).send('Register Successful')
     })
