@@ -18,18 +18,6 @@ router.get('/users',(req,res) => {
 })
 
 
-router.post('/usersi',async(req,res) => {
-    let body = req.body;
-
-
-    let collection = 'user';
-    let response = await postData(collection,body);
-
-    
-    res.send(response)
-
-    
-})
 
 
 
