@@ -18,7 +18,7 @@ router.get('/users',(req,res) => {
 })
 
 
-app.post('/usersi',async(req,res) => {
+router.post('/usersi',async(req,res) => {
     let body = req.body;
 
 
