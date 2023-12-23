@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 router.get('/users',(req,res) => {
     User.find({},(err,user) => {
         if(err) throw err;
-        res.send(user)
+        res.send(usernd)
     })
 })
 
