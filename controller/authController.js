@@ -29,7 +29,7 @@ router.post('/register',(req,res) => {
         name:req.body.name,
         email:req.body.email,
         password:hashpassword,
-        phone:req.body.phone,
+        phone:req.body.phone
         // role:req.body.role?req.body.role:'User'
     },(err,result) => {
         res.status(200).send('Register Successful')

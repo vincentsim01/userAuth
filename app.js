@@ -17,19 +17,19 @@ app.get('/',(req,res) => {
     res.send("Hiii From Express")
 })
 
-app.post('/usersi',async(req,res) => {
-    let body = req.body;
-    let collection = 'user';
-    let response = await postData(collection,body);
-    res.send(response)
-})
+// app.post('/usersi',async(req,res) => {
+//     let body = req.body;
+//     let collection = 'user';
+//     let response = await postData(collection,body);
+//     res.send(response)
+// })
 
-app.post('/dataku',async(req,res) => {
-    let body = req.body;
-    let collection = 'user';
-    let response = await getData(collection,body);
-    res.send(response)
-})
+// app.get('/dataku',async(req,res) => {
+//     let query = {};
+//     let collection = 'restaurants';
+//     let response = await getData(collection,query);
+//     res.send(response)
+// })
 
 
 
