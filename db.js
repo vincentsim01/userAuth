@@ -1,14 +1,25 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/octnode');
+// mongoose.connect('mongodb://localhost:27017/octnode');
+
+mongoose.connect('mongodb://localhost:27017/octnode', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Connected to MongoDB');
+})
+.catch((err) => {
+  console.error('Error connecting to MongoDB:', err.message);
+});
 
 
 
 
 // let mongo = require('mongodb');
 // let {MongoClient} = require('mongodb');
-// let mongoUrl = "mongodb+srv://vincentkiathadi:YIfp7gktEi2USAWW@cluster0.nt2oupy.mongodb.net/?retryWrites=true&w=majority/user";
+// let mongoUrl = "mongodb://localhost:27017/octnode";
 // let client = new MongoClient(mongoUrl);
-// mongoose.connect(mongoUrl);
+// // mongoose.connect(mongoUrl);
 
 
 
