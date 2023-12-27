@@ -91,7 +91,7 @@ router.post('/login',(req,res) => {
 
 //userInfo
 router.get('/userInfo',(req,res) => {
-    let token = req.headers['x-access-token'];
+    let token = req.headers['x-access-token']
     // if(!token) return res.status(201).send({auth:false,token:'No Token Provided'});
     // jwt.verify(token,config.secert,(err,data) => {
     //     if(err) return res.status(201).send({auth:false,token:'Invalid Token'});
@@ -101,27 +101,30 @@ router.get('/userInfo',(req,res) => {
     // })
 
 
-    jwt.verify(token,config.secert)
-    .then((token) => {
+    // jwt.verify(token,config.secert)
+
         if(!token) {
             return res.status(201).send({auth:false,token:'No Token Provided'});
         }
         else{
-            jwt.verify(token,config.secert)
-            .then((data) => {
-                User.findById(data.id)
-                .then((user) => {
+            jwt.verify(token,config.secert,(err, user) => {
+                if (err) {
+                  console.log(err);
+                  return res.status(201).send({auth:false,token:'Invalid Token'});
+                }else{
                     res.send(user);
-                })
-            })
+
+                }
 
         }
-
-    })
-    .catch((err) => {
-        return res.status(201).send({auth:false,token:'Invalid Token'});
+            )
     }
-    )
+
+
+    // .catch((err) => {
+    //     return res.status(201).send({auth:false,token:'Invalid Token'});
+    // }
+    // )
         
         
         
