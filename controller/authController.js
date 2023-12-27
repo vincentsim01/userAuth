@@ -11,10 +11,10 @@ router.use(bodyParser.json());
 
 //list all user
 router.get('/users',(req,res) => {
-    User.find({},(err,user) => {
-        if(err) throw err;
-        res.send(user)
-    })
+    User.find({}).then(function (users) {
+        res.send(users);
+        });
+
 })
 
 

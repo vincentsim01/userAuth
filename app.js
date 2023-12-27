@@ -5,7 +5,7 @@ const db = require('./db.js');
 const dotenv = require('dotenv');
 dotenv.config();
 const port = 5001;
-const AuthController = require('./controller/authController')
+const AuthController = require('./controller/authController');
 let {postData, getData} = require('./db.js');
 
 app.use(cors());
