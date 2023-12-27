@@ -31,35 +31,102 @@ router.post('/register',(req,res) => {
         password:hashpassword,
         phone:req.body.phone
         // role:req.body.role?req.body.role:'User'
-    },(err,result) => {
-        res.status(200).send('Register Successful')
     })
+    .then(function (users) {
+        res.send(users);
+        });
 })
 
 //login user
+// router.post('/login',(req,res) => {
+//     User.findOne({email:req.body.email},(err,user) => {
+//         if(err) return res.status(500).send({auth:false,token:'There is problem while login'})
+//         if(!user) return res.status(201).send({auth:false,token:'No User Found Register First'});
+//         else{
+//             const passIsvalid = bcrypt.compareSync(req.body.password,user.password);
+//             if(!passIsvalid) return res.status(201).send({auth:false,token:'Invalid Password'});
+//             let token = jwt.sign({id:user._id},config.secert,{expiresIn:86400})
+//             return res.status(200).send({auth:true,token});
+//         }
+//     })
+// })
+
+
+
 router.post('/login',(req,res) => {
-    User.findOne({email:req.body.email},(err,user) => {
-        if(err) return res.status(500).send({auth:false,token:'There is problem while login'})
-        if(!user) return res.status(201).send({auth:false,token:'No User Found Register First'});
+    User.findOne({email:req.body.email})
+
+    .then((user)=>{
+        if(!user)
+        { 
+            return res.status(201).send({auth:false,token:'No User Found Register First'})
+        }
         else{
             const passIsvalid = bcrypt.compareSync(req.body.password,user.password);
             if(!passIsvalid) return res.status(201).send({auth:false,token:'Invalid Password'});
             let token = jwt.sign({id:user._id},config.secert,{expiresIn:86400})
             return res.status(200).send({auth:true,token});
+
         }
+
     })
+    .catch((err)=>{
+        return res.status(500).send({auth:false,token:'There is problem while login'});
+    });
+        
+        
+        
+    //     ,(err,user) => {
+    //     if(err) return res.status(500).send({auth:false,token:'There is problem while login'})
+    //     if(!user) return res.status(201).send({auth:false,token:'No User Found Register First'});
+    //     else{
+    //         const passIsvalid = bcrypt.compareSync(req.body.password,user.password);
+    //         if(!passIsvalid) return res.status(201).send({auth:false,token:'Invalid Password'});
+    //         let token = jwt.sign({id:user._id},config.secert,{expiresIn:86400})
+    //         return res.status(200).send({auth:true,token});
+    //     }
+    // })
 })
+
 
 //userInfo
 router.get('/userInfo',(req,res) => {
     let token = req.headers['x-access-token'];
-    if(!token) return res.status(201).send({auth:false,token:'No Token Provided'});
-    jwt.verify(token,config.secert,(err,data) => {
-        if(err) return res.status(201).send({auth:false,token:'Invalid Token'});
-        User.findById(data.id,(err,user) => {
-            res.send(user)
-        })
+    // if(!token) return res.status(201).send({auth:false,token:'No Token Provided'});
+    // jwt.verify(token,config.secert,(err,data) => {
+    //     if(err) return res.status(201).send({auth:false,token:'Invalid Token'});
+    //     User.findById(data.id,(err,user) => {
+    //         res.send(user)
+    //     })
+    // })
+
+
+    jwt.verify(token,config.secert)
+    .then((token) => {
+        if(!token) {
+            return res.status(201).send({auth:false,token:'No Token Provided'});
+        }
+        else{
+            jwt.verify(token,config.secert)
+            .then((data) => {
+                User.findById(data.id)
+                .then((user) => {
+                    res.send(user);
+                })
+            })
+
+        }
+
     })
+    .catch((err) => {
+        return res.status(201).send({auth:false,token:'Invalid Token'});
+    }
+    )
+        
+        
+        
+        
+
 })
 
 module.exports = router;
