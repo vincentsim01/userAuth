@@ -18,6 +18,17 @@ router.get('/users',(req,res) => {
 })
 
 
+// module.exports={
+//     try{
+//         const User=await User.find()
+//         res.status(200).son(User)
+//     }catch(error){
+//         res.status(400).json({message:"error finding users"})
+//     }
+//     }
+
+
+
 
 
 
@@ -65,7 +76,7 @@ router.post('/login',(req,res) => {
             const passIsvalid = bcrypt.compareSync(req.body.password,user.password);
             if(!passIsvalid) return res.status(201).send({auth:false,token:'Invalid Password'});
             let token = jwt.sign({id:user._id},config.secert,{expiresIn:86400})
-            return res.status(200).send({auth:true,token});
+            return res.status(200).send({auth:true,token, user});
 
         }
 
@@ -113,6 +124,7 @@ router.get('/userInfo',(req,res) => {
                   return res.status(201).send({auth:false,token:'Invalid Token'});
                 }else{
                     res.send(user);
+                    sessionStorage.setItem('userInfo',user);
 
                 }
 
