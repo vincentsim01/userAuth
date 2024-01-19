@@ -126,6 +126,14 @@ router.get('/userInfo',(req,res) => {
                     res.send(user);
                     sessionStorage.setItem('userInfo',user);
 
+                    // let users = User.findById(user.id)
+                    // .then(
+                    //     res.send(users))
+
+                    // res.send(users)
+
+                    // sessionStorage.setItem('userInfo',users);
+
                 }
 
         }
