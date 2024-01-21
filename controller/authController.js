@@ -118,13 +118,16 @@ router.get('/userInfo',(req,res) => {
             return res.status(201).send({auth:false,token:'No Token Provided'});
         }
         else{
-            jwt.verify(token,config.secert,(err, user) => {
+            jwt.verify(token,config.secert,(err, data) => {
                 if (err) {
                   console.log(err);
                   return res.status(201).send({auth:false,token:'Invalid Token'});
                 }else{
-                    res.send(user);
-                    sessionStorage.setItem('userInfo',user);
+                    User.findById(data.id)
+                        .then((user) => {res.send(user)});
+                    // res.send(user);
+                    // console.log(user);
+                    // sessionStorage.setItem('userInfo',user);
 
                 }
 
